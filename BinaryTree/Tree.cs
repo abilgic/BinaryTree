@@ -8,7 +8,7 @@ namespace BinaryTree
 {
     public class Tree
     {
-        private class Node
+        public class Node
         {
             public int Data;
             public Node Left;
@@ -21,36 +21,44 @@ namespace BinaryTree
                 Right = null;
             }
         }
-        private Node root;
+        public Node root;
+        public void PrintInOrder(Node head)
+        {
+            var current = head;
+            if (current == null)
+            {
+                return;
 
-        public  void Insert(int Data)
+            }
+            Console.WriteLine(current.Data);
+            PrintInOrder(current.Left);
+            PrintInOrder(current.Right);
+        }
+
+        public  Node Insert(int Data, Node head)
         {
             var newnode = new Node(Data);
-            if (root == null)
-            {
-               
-                root = newnode;
-                
+            if (head == null)
+            {               
+                head = newnode; 
+                return newnode;
             }
             else
             {
-                var current = root;
-                if (current.Left != null)
+                
+                if (head.Data > Data)
                 {
-                    current=current.Left;
+                    head.Left= Insert(Data, head.Left);
+                    
                 }
                 else
                 {
-                    current.Left = newnode;
+                    head.Right = Insert(Data, head.Right);
+
+
                 }
-                if (current.Right != null)
-                {
-                    current = current.Right;
-                }
-                else
-                {
-                    current.Right = newnode;
-                }
+                return head;
+
             }
         }
     }
